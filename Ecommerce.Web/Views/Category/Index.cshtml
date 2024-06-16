@@ -1,9 +1,20 @@
 ﻿@model IEnumerable<Category>
-
+@{
+	ViewBag.Title = "Categories";
+	ViewBag.CardTitle = "Categories";
+	Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
 <h1>Categories</h1>
 
 
-<a asp-controller="Category" asp-action="Create">Create</a>
+
+<partial name="~/Views/Shared/_ToasterPartial.cshtml" />
+
+
+
+<a class="btn btn-primary" asp-controller="Category" asp-action="Create">Create</a>
+
+
 
 <table class="table table-hover">
 
@@ -21,6 +32,10 @@
 				<td>@item.Name </td>
 				<td>@item.Description</td>
 				<td> @item.CreatedTime </td>
+				<td>
+					<a class="btn btn-primary" asp-controller="Category" asp-action="Edit" asp-route-id="@item.CategoryId">Edit</a>
+					<a class="btn btn-danger" asp-controller="Category" asp-action="Delete" asp-route-id="@item.CategoryId">Delete</a>
+				</td>
 			</tr>
 		}
 

@@ -27,12 +27,14 @@ namespace Ecommerce.Web.Controllers
 		}
 
 		[HttpPost]
+		[AutoValidateAntiforgeryToken]
 		public IActionResult Create(Category category)
 		{
 			if (ModelState.IsValid)
 			{
 				_context.categories.Add(category);
 				_context.SaveChanges();
+				TempData["SuccessMessage"] = "Category created successfully";
 				return RedirectToAction("Index");
 			} else
 			{
@@ -40,6 +42,62 @@ namespace Ecommerce.Web.Controllers
 			}
 			
 		}
+		[HttpGet]
+		public IActionResult Edit(int id)
+		{
+			return View(_context.categories.Find(id));
+		}
+
+		[HttpPost]
+		[AutoValidateAntiforgeryToken]
+		public IActionResult Edit(Category category)
+		{
+			if (ModelState.IsValid)
+			{
+				var cat = _context.categories.Find(category.CategoryId);
+				cat.Name = category.Name;
+				cat.Description = category.Description;
+				_context.SaveChanges();
+				TempData["SuccessMessage"] = "Category Edited successfully";
+				return RedirectToAction("Index");
+			} 
+			else
+			{
+				return View(category);
+			}
+			
+		}
+
+		[HttpGet]
+		public IActionResult Delete(int id)
+		{
+			var category = _context.categories.Find(id);
+			if (category == null)
+			{
+				return NotFound();
+			}
+			return View(category); // This view should prompt for deletion confirmation
+		}
+
+
+		[HttpPost, ActionName("Delete")]
+		[ValidateAntiForgeryToken]
+		public IActionResult DeleteConfirmed(int id)
+		{
+			var category = _context.categories.Find(id);
+			if (category == null)
+			{
+				return Content("Category not found"); // Return an error message or redirect to an error page();
+			}
+
+			_context.categories.Remove(category);
+			_context.SaveChanges();
+
+			TempData["SuccessMessage"] = "Category deleted successfully";
+
+			return RedirectToAction(nameof(Index)); // Redirect to the index or a relevant page
+		}
+
 
 
 	}
