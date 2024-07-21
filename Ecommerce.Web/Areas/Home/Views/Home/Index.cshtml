@@ -1,0 +1,31 @@
+﻿@model IEnumerable<HomeVM>
+
+@{
+	Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+@foreach (var product in Model)
+{
+    <div class="col mb-5">
+        <div class="card h-100">
+            <!-- Product image-->
+            <img class="card-img-top" src="@product.Img.Replace('\\', '/')" alt="..." width="400" height="300"/>
+            <!-- Product details-->
+            <div class="card-body p-4">
+                <div class="text-center">
+                    <!-- Product name-->
+                    <h5 class="fw-bolder">@product.Name</h5
+                    <h6>@product.Description</h6>
+                    <!-- Product price-->
+                    <p class="mb-0">@product.Price</p>
+                </div>
+            </div>
+            <!-- Product actions-->
+            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center">
+                    <a class="btn btn-outline-dark mt-auto" asp-controller="Home" asp-action="Details" asp-route-id="@product.Id">View options</a>
+                    </div>
+            </div>
+        </div>
+    </div>
+}

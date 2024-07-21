@@ -1,0 +1,63 @@
+﻿@model ProductVM
+
+@{
+	ViewBag.Title = "Create";
+	ViewBag.CardTitle = "Create";
+	Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div class="row">
+	<div class="col-md-6">
+		<form enctype="multipart/form-data" asp-controller="Product" asp-action="Edit" method="post">
+			<input type="hidden" asp-for="Id" />
+			<input type="hidden" asp-for="Img" />
+			<div>
+				<label asp-for="Name">Name</label>
+				<input class="form-control" asp-for="Name" />
+				<span asp-validation-for="Name" class="text-danger"></span>
+			</div>
+			<div>
+				<label asp-for="Description">Description</label>
+				<input class="form-control" class="form-tex" rows=3 asp-for="Description" />
+				<span asp-validation-for="Description" class="text-danger"></span>
+			</div>
+			<div>
+				<label asp-for="Img"></label>
+
+				<input type="file" class="form-control" class="form-tex" rows=3 asp-for="Img" /> 
+				 <span asp-validation-for="Img" class="text-danger"></span>
+				
+			</div>
+			<div>
+				<label asp-for="Price"></label>
+				<input class="form-control" class="form-tex" rows=3 asp-for="Price" />
+				<span asp-validation-for="Price" class="text-danger"></span>
+			</div>
+
+			<div>
+				<label asp-for="CategoryId">Category</label>
+				<select asp-for="CategoryId" asp-items="Model.Categories"></select>
+			</div>
+			
+			<div>
+				<input class="btn btn-primary" type="submit" value="Create" />
+			</div>
+
+		</form>
+	</div>
+	<div class="col-md-6">
+
+		<img src="@Model.Img.Replace('\\', '/')"  alt="@Model.Name" />
+		
+	</div>
+</div>
+
+@section Scripts {
+	<partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+}
+
+
+
+
+
+
